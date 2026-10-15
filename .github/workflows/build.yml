@@ -20,7 +20,6 @@ jobs:
       env:
         SECRET_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       run: |
-        # Tự động thay thế chuỗi DEFAULT_TOKEN trong code bằng token bảo mật thực tế khi build
         sed -i "s/DEFAULT_TOKEN/$SECRET_BOT_TOKEN/g" main.py
 
     - name: Install dependencies
@@ -36,12 +35,13 @@ jobs:
     - name: Initialize Buildozer
       run: |
         buildozer init || true
+        # Cấu hình requirements an toàn và chỉ định arch arm64-v8a để build nhanh gấp đôi, chống quá tải
         sed -i 's/^requirements =.*/requirements = python3,kivy,requests,certifi,urllib3,idna,charset-normalizer/' buildozer.spec
         sed -i 's/#android.permissions =.*/android.permissions = INTERNET/' buildozer.spec
+        sed -i 's/#android.architectures =.*/android.architectures = arm64-v8a/' buildozer.spec
 
     - name: Build with Buildozer
       run: |
-        # Dòng 'yes |' giúp tự động vượt qua bảng hỏi chấp nhận bản quyền Android SDK
         yes | buildozer -v android debug
 
     - name: Upload APK artifact
