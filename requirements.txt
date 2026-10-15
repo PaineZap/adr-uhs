@@ -1,0 +1,7 @@
+python3
+kivy==2.2.1
+requests
+certifi
+urllib3
+idna
+charset-normalizer
