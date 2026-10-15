@@ -35,8 +35,8 @@ jobs:
     - name: Initialize Buildozer
       run: |
         buildozer init || true
-        # Cấu hình requirements an toàn và chỉ định arch arm64-v8a để build nhanh gấp đôi, chống quá tải
-        sed -i 's/^requirements =.*/requirements = python3,kivy,requests,certifi,urllib3,idna,charset-normalizer/' buildozer.spec
+        # Ghim phiên bản kivy=2.3.0 (hoặc 2.2.1) để tương thích tuyệt đối với python-for-android
+        sed -i 's/^requirements =.*/requirements = python3,kivy==2.3.0,requests,certifi,urllib3,idna,charset-normalizer,filetype/' buildozer.spec
         sed -i 's/#android.permissions =.*/android.permissions = INTERNET/' buildozer.spec
         sed -i 's/#android.architectures =.*/android.architectures = arm64-v8a/' buildozer.spec
 
