@@ -41,7 +41,8 @@ jobs:
 
     - name: Build with Buildozer
       run: |
-        buildozer -v android debug
+        # Dòng 'yes |' giúp tự động vượt qua bảng hỏi chấp nhận bản quyền Android SDK
+        yes | buildozer -v android debug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
